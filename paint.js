@@ -1,3 +1,5 @@
+var Shapes = require("./shape");
+
 function getMousePos(canvas, e) {
     var clientrect = canvas.getBoundingClientRect();
     return {
@@ -6,59 +8,77 @@ function getMousePos(canvas, e) {
     };
 }
 
-$(document).ready(function () {
-    var canvas = document.getElementById("whiteboard");
-    var context = canvas.getContext("2d");
+
+
+$(document).ready(function() {
+    var Settings = {
+        canvas: document.getElementById("whiteboard"),
+        cShape: tool.options[tool.selectedIndex].value,
+        color: "blue",
+        isDrawing: false,
+        currentShape: undefined,
+        shapes: []
+    }
+    var context = Settings.canvas.getContext("2d");
     var tool = document.getElementById("drawingTools")
-    var startX = 0;
-    var startY = 0;
-    var isDrawing = false;
     
+    var startp = {x:0, y:0};
 
-    $(canvas).mousedown(function (e) {
-        var p = getMousePos(canvas, e);
-        var x = p.x;
-        var y = p.y;
-
-        startX = x;
-        startY = y;
-        isDrawing = true;
+    $(Settings.canvas).mousedown(function (e) {
+        var shape = undefined;
         
+        var p = getMousePos(Settings.canvas, e);
+        startp = p;
+        if(!Settings.isDrawing) {
+            Settings.isDrawing = true;
+        }
+
+        if(Settings.cShape === "pen") {
+            console.log("PEN");
+        } else if(Settings.cShape === "line") {
+            shape = Shapes.Line(startp.x, startp.y, Settings.color);
+        } else if(Settings.cShape === "rectangle") {
+            shape = Shapes.Rectangle(startp.x, startp.y, Settings.color);
+        } else if(Settings.cShape === "circle") {
+            shape = Shapes.Circle(startp.x, startp.y, Settings.color);
+        } else if(Settings.cShape === "text") {
+            console.log("TEXT");
+        }
+        console.log(shape);
     });
 
-    $(canvas).mousemove(function (e) {
-        if (isDrawing === true) {
-            var p = getMousePos(canvas, e);
-            var x = p.x;
-            var y = p.y;
+    $(Settings.canvas).mousemove(function (e) {
+        if (Settings.isDrawing === true) {
+            var p = getMousePos(Settings.canvas, e);
             // DRAW PEN
-            if (tool.options[tool.selectedIndex].value === "pen") {
-                // TODO: implement pen
+            if (Settings.cShape === "pen") {
+                // context.beginPath();
+                // context.moveTo(startp.x, startp.y);
+                // startp = p;
+                // context.lineTo(p.x, p.y);
+                // context.stroke();
             }
             // DRAW LINE 
-            else if (tool.options[tool.selectedIndex].value === "line") {
-                // TODO: 
-                context.beginPath();
-                context.moveTo(startX, startY);
-                context.lineTo(x, y);
-                context.stroke();
+            else if (Settings.cShape === "line") {
+                // context.beginPath();
+                // context.moveTo(startp.x, startp.y);
+                // context.lineTo(p.x, p.y);
+                // context.stroke();
             } 
             // DRAW RECTANGLE
-            else if (tool.options[tool.selectedIndex].value === "rectangle") {
+            else if (Settings.cShape === "rectangle") {
                 // TODO: 
-                console.log("X: " + x + "Y:" + y);
                 context.fillStyle = "green";
-                context.strokeRect(x, y, startX-x, startY-y);
+                context.strokeRect(p.x, p.y, startp.x-p.x, startp.y-p.y);
             }
             // DRAW CIRCLE
-            else if (tool.options[tool.selectedIndex].value === "circle") {
+            else if (Settings.cShape === "circle") {
                 // TODO: 
-                console.log("X: " + x + "Y:" + y);
                 context.fillStyle = "red";
-                context.strokeRect(x, y, startX-x, startY-y);
+                context.strokeRect(p.x, p.y, startp.x-p.x, startp.y-p.y);
             } 
             // DRAW TEXT
-            else if(tool.options[tool.selectedIndex.value] === "text") {
+            else if(Settings.cShape === "text") {
                 
             }
         }
