@@ -53,15 +53,15 @@ $(document).ready(function () {
         if (Settings.isDrawing === true) {
             context.beginPath();
             context.clearRect(0, 0, Settings.canvas.width, Settings.canvas.height);
+            context.stroke();
+            Settings.shapes.forEach(function(elem) {
+                elem.draw(context);
+            });
+
             var p = getMousePos(Settings.canvas, e);
             shape.setEnd(p.x, p.y);
             shape.setWidth(2);
             shape.draw(context);
-
-
-            Settings.shapes.forEach(function(elem) {
-                elem.draw(context);
-            });
         }
 
     });
@@ -70,8 +70,6 @@ $(document).ready(function () {
         Settings.isDrawing = false;
         Settings.shapes.push(shape);
         console.log(Settings.shapes);
-        Settings.shapes.forEach(function(elem) {
-            elem.draw(context);
-        });
+
     })
 });
