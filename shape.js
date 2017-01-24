@@ -6,7 +6,7 @@ class Shape {
         this.endY = y;
         this.color = color;
     }
-    setEnd(x,y) {
+    setEnd(x, y) {
         this.endX = x;
         this.endY = y;
     }
@@ -23,9 +23,14 @@ class Line extends Shape {
     }
     draw(context) {
         context.fillStyle = this.color;
+        var tmpPoint = {x:this.x, y: this.y};
+        context.beginPath();
         this.points.forEach(function(elem) {
-            context.fillRect(elem.x, elem.y, 1, 1);
+            context.moveTo(tmpPoint.x, tmpPoint.y);
+            context.lineTo(elem.x, elem.y);
+            tmpPoint = elem;
         });
+        context.stroke();
     }
 }
 
@@ -34,11 +39,8 @@ class Circle extends Shape {
         super(x, y, color);
     }
     draw(context) {
-        context.fillStyle = this.color;
-        var absX = Math.abs(this.x-this.endX);
-        var absY = Math.abs(this.y-this.endY);
-        context.scale(absX, absY);
-        context.arc(absX, absY, radius, 0, 2 * Math.PI, false);
+        context.arc(this.x, this.y, 50, 0, 2 * Math.PI, false);
+        context.stroke();
     }
 }
 
@@ -49,6 +51,7 @@ class Rectangle extends Shape {
     
     draw(context) {
         context.fillStyle = this.color;
-        context.fillRect(this.x, this.y, this.endX, this.endY);
+        context.fillRect(this.endX, this.endY, this.x - this.endX, this.y - this.endY);
+        context.stroke();
     }
 }
