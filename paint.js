@@ -12,9 +12,11 @@ $(document).ready(function () {
         canvas: document.getElementById("whiteboard"),
         cShape: tool.options[tool.selectedIndex].value,
         color: "blue",
+        width: 1,
         isDrawing: false,
         currentShape: undefined,
         shapes: []
+
     }
     var shape = undefined;
     var context = Settings.canvas.getContext("2d");
@@ -34,13 +36,13 @@ $(document).ready(function () {
         }
 
         if (Settings.cShape === "pen") {
-            console.log("PEN");
+            shape = new Pen(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "line") {
-            shape = new Line(startp.x, startp.y, Settings.color);
+            shape = new Line(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "rectangle") {
-            shape = new Rectangle(startp.x, startp.y, Settings.color);
+            shape = new Rectangle(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "circle") {
-            shape = new Circle(startp.x, startp.y, Settings.color);
+            shape = new Circle(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "text") {
             console.log("TEXT");
         }
@@ -49,17 +51,27 @@ $(document).ready(function () {
 
     $(Settings.canvas).mousemove(function (e) {
         if (Settings.isDrawing === true) {
+            context.beginPath();
+            context.clearRect(0, 0, Settings.canvas.width, Settings.canvas.height);
             var p = getMousePos(Settings.canvas, e);
-            console.log(p);
             shape.setEnd(p.x, p.y);
+            shape.setWidth(2);
             shape.draw(context);
-            console.log(shape);
+
+
+            Settings.shapes.forEach(function(elem) {
+                elem.draw(context);
+            });
         }
 
     });
 
     $(Settings.canvas).mouseup(function (e) {
         Settings.isDrawing = false;
-        shape = undefined;
+        Settings.shapes.push(shape);
+        console.log(Settings.shapes);
+        Settings.shapes.forEach(function(elem) {
+            elem.draw(context);
+        });
     })
 });

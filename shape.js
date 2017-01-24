@@ -1,35 +1,51 @@
 class Shape {
-    constructor(x, y, color) {
+    constructor(x, y, color, width) {
         this.x = x;
         this.y = y;
         this.endX = x;
         this.endY = y;
         this.color = color;
+        this.width = width;
     }
     setEnd(x, y) {
         this.endX = x;
         this.endY = y;
     }
-
+    setWidth(width) {
+        this.width = width;
+    }
 }
 
-class Line extends Shape {
+class Pen extends Shape {
     constructor(x, y, color) {
         super(x, y, color);
         this.points = [];
     }
     setEnd(x, y) {
         this.points.push({x: x, y: y});
+        this.endX = x;
+        this.endY = y;
     }
     draw(context) {
         context.fillStyle = this.color;
-        var tmpPoint = {x:this.x, y: this.y};
+        context.lineWidth = this.width;
         context.beginPath();
         this.points.forEach(function(elem) {
-            context.moveTo(tmpPoint.x, tmpPoint.y);
             context.lineTo(elem.x, elem.y);
-            tmpPoint = elem;
         });
+        context.stroke();
+    }
+}
+
+class Line extends Shape {
+    constructor(x, y, color) {
+        super(x, y, color);
+    }
+    draw(context) {
+        context.fillStyle = this.color;
+        context.beginPath();
+        context.moveTo(this.endX, this.endY);
+        context.lineTo(this.x, this.y);
         context.stroke();
     }
 }
