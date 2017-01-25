@@ -7,20 +7,21 @@ function getMousePos(canvas, e) {
 }
 
 $(document).ready(function () {
-    var tool = document.getElementById("drawingTools")
+    var tool = document.getElementById("toolSelect");
+    var colorS = document.getElementById("colorSelect");
     var Settings = {
         canvas: document.getElementById("whiteboard"),
         cShape: tool.options[tool.selectedIndex].value,
-        color: "blue",
-        width: 1,
+        color: colorS.options[colorS.selectedIndex].value,
+        width: 2,
         isDrawing: false,
         currentShape: undefined,
-        shapes: []
-
+        shapes: [],
+        hasDrawn: false
     }
+
     var shape = undefined;
     var context = Settings.canvas.getContext("2d");
-
     var startp = {
         x: 0,
         y: 0
@@ -28,6 +29,8 @@ $(document).ready(function () {
 
     $(Settings.canvas).mousedown(function (e) {
         Settings.cShape = tool.options[tool.selectedIndex].value;
+        Settings.color = colorS.options[colorS.selectedIndex].value;
+        Settings.width = document.getElementById('widthInput').value;
 
         var p = getMousePos(Settings.canvas, e);
         startp = p;
@@ -50,26 +53,30 @@ $(document).ready(function () {
     });
 
     $(Settings.canvas).mousemove(function (e) {
-        if (Settings.isDrawing === true) {
+        if (Settings.isDrawing) {
+            Settings.hasDrawn = true;
             context.beginPath();
             context.clearRect(0, 0, Settings.canvas.width, Settings.canvas.height);
-            context.stroke();
+            
             Settings.shapes.forEach(function(elem) {
                 elem.draw(context);
             });
-
+            
             var p = getMousePos(Settings.canvas, e);
             shape.setEnd(p.x, p.y);
-            shape.setWidth(2);
+            shape.setWidth(Settings.width);
             shape.draw(context);
-        }
 
+            context.stroke();
+        }
     });
 
-    $(Settings.canvas).mouseup(function (e) {
+    $(document).mouseup(function (e) {
+        if(Settings.hasDrawn)
+            Settings.shapes.push(shape);
         Settings.isDrawing = false;
-        Settings.shapes.push(shape);
+        Settings.hasDrawn = false;
         console.log(Settings.shapes);
 
-    })
+    });
 });

@@ -27,7 +27,7 @@ class Pen extends Shape {
         this.endY = y;
     }
     draw(context) {
-        context.fillStyle = this.color;
+        context.strokeStyle = this.color;
         context.lineWidth = this.width;
         context.beginPath();
         this.points.forEach(function(elem) {
@@ -42,7 +42,8 @@ class Line extends Shape {
         super(x, y, color);
     }
     draw(context) {
-        context.fillStyle = this.color;
+        context.strokeStyle = this.color;
+        context.lineWidth = this.width;
         context.beginPath();
         context.moveTo(this.endX, this.endY);
         context.lineTo(this.x, this.y);
@@ -55,6 +56,7 @@ class Circle extends Shape {
         super(x, y, color);
     }
     draw(context) {
+        context.fillStyle = this.color;
         context.arc(this.x, this.y, 50, 0, 2 * Math.PI, false);
         context.stroke();
     }
