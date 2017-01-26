@@ -38,12 +38,16 @@ $(document).ready(function () {
     };
 
     $("#undoButton").click( function() {
-        Settings.redo.push(Settings.shapes.pop());
-        redrawCanvas();
+        if(Settings.shapes.length) {
+            Settings.redo.push(Settings.shapes.pop());
+            redrawCanvas();
+        }
     });
     $("#redoButton").click( function() {
-        Settings.shapes.push(Settings.redo.pop());
-        redrawCanvas();
+        if(Settings.redo.length) {        
+            Settings.shapes.push(Settings.redo.pop());
+            redrawCanvas();
+        }
     });
 
     $(Settings.canvas).mousedown(function (e) {
