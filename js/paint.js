@@ -17,6 +17,7 @@ $(document).ready(function () {
         isDrawing: false,
         currentShape: undefined,
         shapes: [],
+        redo: [],
         hasDrawn: false
     }
 
@@ -26,6 +27,24 @@ $(document).ready(function () {
         x: 0,
         y: 0
     };
+
+    function redrawCanvas() {
+        context.beginPath();
+        context.clearRect(0, 0, Settings.canvas.width, Settings.canvas.height);
+        Settings.shapes.forEach(function (elem) {
+            elem.draw(context);
+        });
+        context.stroke();
+    };
+
+    $("#undoButton").click( function() {
+        Settings.redo.push(Settings.shapes.pop());
+        redrawCanvas();
+    });
+    $("#redoButton").click( function() {
+        Settings.shapes.push(Settings.redo.pop());
+        redrawCanvas();
+    });
 
     $(Settings.canvas).mousedown(function (e) {
         Settings.cShape = tool.options[tool.selectedIndex].value;
@@ -55,19 +74,13 @@ $(document).ready(function () {
     $(Settings.canvas).mousemove(function (e) {
         if (Settings.isDrawing) {
             Settings.hasDrawn = true;
-            context.beginPath();
-            context.clearRect(0, 0, Settings.canvas.width, Settings.canvas.height);
-
-            Settings.shapes.forEach(function (elem) {
-                elem.draw(context);
-            });
+            redrawCanvas();
 
             var p = getMousePos(Settings.canvas, e);
             shape.setEnd(p.x, p.y);
             shape.setWidth(Settings.width);
             shape.draw(context);
 
-            context.stroke();
         }
     });
 
