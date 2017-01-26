@@ -17,8 +17,10 @@ $(document).ready(function () {
         currentShape: undefined,
         shapes: [],
         redo: [],
-        hasDrawn: false
-    }
+        hasDrawn: false,
+        userText: document.getElementById('userInputText').value
+
+    };
 
     var shape = undefined;
     var context = Settings.canvas.getContext("2d");
@@ -59,6 +61,7 @@ $(document).ready(function () {
         Settings.cShape = tool.options[tool.selectedIndex].value;
         Settings.color = "#" + document.getElementById('colorInput').value;
         Settings.width = document.getElementById('widthInput').value;
+        Settings.userText = document.getElementById('userInputText').value;
         Settings.redo = [];
 
         var p = getMousePos(Settings.canvas, e);
@@ -76,7 +79,7 @@ $(document).ready(function () {
         } else if (Settings.cShape === "circle") {
             shape = new Circle(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "text") {
-            console.log("TEXT");
+            shape = new Text(startp.x, startp.y, Settings.color,Settings.width, Settings.userText);
         }
 
         redrawCanvas();

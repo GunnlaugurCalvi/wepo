@@ -1,6 +1,6 @@
 
 class Shape {
-    constructor(x, y, color, width) {
+    constructor(x, y, color, width, uText) {
         this.p1 = {
             x: x,
             y: y
@@ -11,6 +11,7 @@ class Shape {
         };
         this.color = color;
         this.width = width;
+        this.text = uText;
     }
     setEnd(x, y) {
         this.p2.x = x;
@@ -120,4 +121,18 @@ class Rectangle extends Shape {
         context.strokeRect(this.p2.x, this.p2.y, this.p1.x - this.p2.x, this.p1.y - this.p2.y);
         context.stroke();
     }
+}
+
+class Text extends Shape{
+
+    constructor(x,y,color,width, text){
+        super(x,y,color,width,text);
+    }
+    draw(context){
+        this.updateContext(context);
+
+        context.fillStyle = this.color;
+        context.fillText(this.text, this.p2.x, this.p2.y);
+
+    };
 }
