@@ -8,11 +8,10 @@ function getMousePos(canvas, e) {
 
 $(document).ready(function () {
     var tool = document.getElementById("toolSelect");
-    var colorS = document.getElementById("colorSelect");
     var Settings = {
         canvas: document.getElementById("whiteboard"),
         cShape: tool.options[tool.selectedIndex].value,
-        color: colorS.options[colorS.selectedIndex].value,
+        color: document.getElementById('colorInput').value,
         width: 2,
         isDrawing: false,
         currentShape: undefined,
@@ -36,6 +35,12 @@ $(document).ready(function () {
         });
         context.stroke();
     };
+    function drawCurrentShape(e) {
+        var p = getMousePos(Settings.canvas, e);
+        shape.setEnd(p.x, p.y);
+        shape.setWidth(Settings.width);
+        shape.draw(context);
+    }
 
     $("#undoButton").click( function() {
         if(Settings.shapes.length) {
@@ -52,8 +57,9 @@ $(document).ready(function () {
 
     $(Settings.canvas).mousedown(function (e) {
         Settings.cShape = tool.options[tool.selectedIndex].value;
-        Settings.color = colorS.options[colorS.selectedIndex].value;
+        Settings.color = "#" + document.getElementById('colorInput').value;
         Settings.width = document.getElementById('widthInput').value;
+        Settings.redo = [];
 
         var p = getMousePos(Settings.canvas, e);
         startp = p;
@@ -73,27 +79,26 @@ $(document).ready(function () {
             console.log("TEXT");
         }
 
+        redrawCanvas();
+        drawCurrentShape(e);
+
     });
 
     $(Settings.canvas).mousemove(function (e) {
         if (Settings.isDrawing) {
-            Settings.hasDrawn = true;
+            
             redrawCanvas();
-
-            var p = getMousePos(Settings.canvas, e);
-            shape.setEnd(p.x, p.y);
-            shape.setWidth(Settings.width);
-            shape.draw(context);
-
+            drawCurrentShape(e);
         }
     });
 
-    $(document).mouseup(function (e) {
-        if (Settings.hasDrawn)
+    $(document).mouseup(function () {
+        if(Settings.isDrawing) {
             Settings.shapes.push(shape);
-        Settings.isDrawing = false;
-        Settings.hasDrawn = false;
-        console.log(Settings.shapes);
-
+            Settings.isDrawing = false;
+            Settings.hasDrawn = false;
+            console.log(Settings.shapes);
+            redrawCanvas();
+        }
     });
 });
