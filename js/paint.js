@@ -58,6 +58,9 @@ $(document).ready(function () {
             redrawCanvas();
         }
     });
+    $('#clearAll').click(function () {
+        context.clearRect(0,0,800,550);
+    });
 
     $("#savePaint").click(function () {
         saveP();
