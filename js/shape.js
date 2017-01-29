@@ -1,6 +1,6 @@
 
 class Shape {
-    constructor(x, y, color, width, uText) {
+    constructor(x, y, color, width, uText,Wtext,fontT) {
         this.p1 = {
             x: x,
             y: y
@@ -12,6 +12,8 @@ class Shape {
         this.color = color;
         this.width = width;
         this.text = uText;
+        this.textW = Wtext;
+        this.textFont = fontT;
     }
     setEnd(x, y) {
         this.p2.x = x;
@@ -23,6 +25,7 @@ class Shape {
     updateContext(context) {
         context.strokeStyle = this.color;
         context.lineWidth = this.width;
+
     }
     drawPoint(context, p) {
         context.beginPath();
@@ -125,16 +128,13 @@ class Rectangle extends Shape {
 
 class Text extends Shape{
 
-    constructor(x,y,color,width, text){
-        super(x,y,color,width,text);
+    constructor(x,y,color,width,text,textW,textFont){
+        super(x,y,color,width,text,textW, textFont);
     }
     draw(context){
-        var textW = document.getElementById('widthText').value;
-        this.updateContext(context);
-        context.fillStyle = this.color;
-        context.font = textW;
-        context.fillText(this.text, this.p2.x, this.p2.y);
-
+        context.strokeStyle = this.color;
+        context.font = this.textW + ' ' + this.textFont;
+        context.strokeText(this.text, this.p2.x, this.p2.y);
     };
 
 }

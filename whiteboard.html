@@ -41,7 +41,7 @@
 
 
     <form id="form">
-        TOOL:
+        <label>TOOL:</label>
         <select id="toolSelect">
             <option value="pen">Pen</option>
             <option value="line">Line</option>
@@ -49,28 +49,42 @@
             <option value="circle">Circle</option>
             <option value="text">Text</option>
         </select>
-        FILL:
-        <input type="checkbox">
-        COLOR:
+
+        <label>COLOR:</label>
         <input id="colorInput" value="000000" class="jscolor {width:243, height:150, position:'right',
             borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
-        WIDTH:
+        <br/>
+        <label>WIDTH:</label>
         <input type="number" id="widthInput" min="1" max="100" step="1" value="2">
         <button type="button" id="undoButton">UNDO</button>
         <button type="button" id="redoButton">REDO</button>
 
-        TEXT:
-        <input type="text" id="userInputText" value="Very nice text"/>
-        WIDTH OF TEXT:
+        <label>TEXT:</label>
+        <input type="text" id="userInputText" value="Very nice text" />
+        <label>WIDTH OF TEXT:</label>
         <select id="widthText">
             <option value="10px"> 10</option>
-            <option value="20px"> 20</option>
-            <option value="30px"> 30</option>
-            <option value="40px"> 40</option>
-            <option value="50px"> 50</option>
-            <option value="60px"> 60</option>
-            <option value="70px"> 70</option>
+            <option value="15px"> 20</option>
+            <option value="20px"> 30</option>
+            <option value="25px"> 40</option>
+            <option value="30px"> 50</option>
+            <option value="35px"> 60</option>
+            <option value="40px"> 70</option>
         </select>
+        <label>FONT OF TEXT:</label>
+        <select id="fontText">
+            <option id="arial"> Arial</option>
+            <option id="Baskerville Old Face"> Baskerville Old Face</option>
+            <option id="Calibri">Calibri</option>
+            <option id="Comic Sans MS">Comic Sans MS</option>
+            <option id="SketchFlow Print">SketchFlow Print</option>
+            <option id="Vivaldi">Vivaldi</option>
+            <option id="Vladimir Script">Vladimir Script</option>
+            <option id="Broadway">Broadway</option>
+            <option id="Chiller">Chiller</option>
+            <option id="Old English Text MT">Old English Text MT</option>
+        </select>
+
 
     </form>
 </div>

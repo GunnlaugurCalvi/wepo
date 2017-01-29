@@ -18,7 +18,9 @@ $(document).ready(function () {
         shapes: [],
         redo: [],
         hasDrawn: false,
-        userText: document.getElementById('userInputText').value
+        userText: document.getElementById('userInputText').value,
+        textWidth: $('#widthText').val(),
+        fontText: $('#fontText').val()
     };
 
     savedPics();
@@ -68,6 +70,8 @@ $(document).ready(function () {
         Settings.color = "#" + document.getElementById('colorInput').value;
         Settings.width = document.getElementById('widthInput').value;
         Settings.userText = document.getElementById('userInputText').value;
+        Settings.textWidth = $('#widthText').val();
+        Settings.fontText = $('#fontText').val();
         Settings.redo = [];
 
         var p = getMousePos(Settings.canvas, e);
@@ -85,7 +89,7 @@ $(document).ready(function () {
         } else if (Settings.cShape === "circle") {
             shape = new Circle(startp.x, startp.y, Settings.color, Settings.width);
         } else if (Settings.cShape === "text") {
-            shape = new Text(startp.x, startp.y, Settings.color,Settings.width, Settings.userText);
+            shape = new Text(startp.x, startp.y, Settings.color, Settings.width, Settings.userText, Settings.textWidth,Settings.fontText);
         }
 
         redrawCanvas();
@@ -115,10 +119,10 @@ $(document).ready(function () {
             url: url,
             data: JSON.stringify(drawing),
             success: function (data) {
-                console.log( drawing + ' is Saved!');
+                alert( drawing.title + ' is Saved!');
             },
             error: function (xhr, err) {
-                console.log('We came across this error ' +  xhr + err);
+                alert('We came across this error ' +  xhr + err);
             }
         });
 
