@@ -129,10 +129,12 @@ class Text extends Shape{
         super(x,y,color,width,text);
     }
     draw(context){
+        var textW = document.getElementById('widthText').value;
         this.updateContext(context);
-
         context.fillStyle = this.color;
+        context.font = textW;
         context.fillText(this.text, this.p2.x, this.p2.y);
 
     };
+
 }

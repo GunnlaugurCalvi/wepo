@@ -19,9 +19,9 @@ $(document).ready(function () {
         redo: [],
         hasDrawn: false,
         userText: document.getElementById('userInputText').value
-
     };
 
+    savedPics();
     var shape = undefined;
     var context = Settings.canvas.getContext("2d");
     var startp = {
@@ -36,7 +36,7 @@ $(document).ready(function () {
             elem.draw(context);
         });
         context.stroke();
-    };
+    }
     function drawCurrentShape(e) {
         var p = getMousePos(Settings.canvas, e);
         shape.setEnd(p.x, p.y);
@@ -57,6 +57,12 @@ $(document).ready(function () {
         }
     });
 
+    $("#savePaint").click(function () {
+        saveP();
+    });
+    $("#loadPaint").click(function () {
+        //TODO
+    });
     $(Settings.canvas).mousedown(function (e) {
         Settings.cShape = tool.options[tool.selectedIndex].value;
         Settings.color = "#" + document.getElementById('colorInput').value;
@@ -93,7 +99,48 @@ $(document).ready(function () {
             redrawCanvas();
             drawCurrentShape(e);
         }
+
     });
+
+    function saveP() {
+        var drawing = {
+            title: document.getElementById('paintName').value,
+            content: Settings.shapes
+        };
+
+        var url = "http://localhost:3000/api/drawings";
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: url,
+            data: JSON.stringify(drawing),
+            success: function (data) {
+                console.log( drawing + ' is Saved!');
+            },
+            error: function (xhr, err) {
+                console.log('We came across this error ' +  xhr + err);
+            }
+        });
+
+
+    }
+
+    function savedPics() {
+        var url = "http://localhost:3000/api/drawings";
+        $.getJSON( url, function( data ) {
+            $.each( data, function( key, val ) {
+                $('#savedPaintings').append($('<option>', {
+                    value: val.id,
+                    text : val.title
+                }));
+            });
+        });
+
+    }
+    function loadP() {
+        var url = "http://localhost:3000/api/drawings/";
+        //TODO
+    }
 
     $(document).mouseup(function () {
         if(Settings.isDrawing) {
