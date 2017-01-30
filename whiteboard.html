@@ -3,45 +3,24 @@
 
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <meta charset="utf-8">
     <script type="text/javascript" src="js/jscolor.min.js"></script>
     <script type="text/javascript" src="js/shape.js"></script>
     <script type="text/javascript" src="js/paint.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/stylesheet.css"/>
-    <meta charset="utf-8">
     <title>Paint</title>
 </head>
 
 <body>
-<!--<header id="header">PAINT YO SELF</header>-->
-<div class="wide">
-    <div class="col-xs-5 line"><hr></div>
-    <div class="col-xs-2 logo"></div>
-    <div class="col-xs-5 line"><hr></div>
-</div>
-
-<div class="header">
-    <div class="text-center">
-        <h1>IT WORKS ANYWAY </h1>
-    </div>
-</div><!-- /.container -->
-<div id="paintings">
-    <label>Saved drawings!</label>
-    <select id="savedPaintings" name="prevPaint">
-    </select>
-    <button id="loadPaint">Load!</button>
-
-    <input type="text" id="paintName"/>
-    <button id="savePaint">Save!</button>
-</div>
 <div id="container">
-    <canvas id="whiteboard" width="800" height="550">
-        <p>Sorry your browser doesn't handle this new heat</p>
-    </canvas>
 
+<header>
+    <h1>Paint</h1>
+</header>
 
+<nav>
     <form id="form">
-        <label>TOOL:</label>
+        <h3>TOOLS</h3>
         <select id="toolSelect">
             <option value="pen">Pen</option>
             <option value="line">Line</option>
@@ -49,46 +28,66 @@
             <option value="circle">Circle</option>
             <option value="text">Text</option>
         </select>
-
-        <label>COLOR:</label>
+        <h4>COLOR</h4>
         <input id="colorInput" value="000000" class="jscolor {width:243, height:150, position:'right',
             borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
-        <br/>
-        <label>WIDTH:</label>
-        <input type="number" id="widthInput" min="1" max="100" step="1" value="2">
-        <button type="button" id="undoButton">UNDO</button>
-        <button type="button" id="redoButton">REDO</button>
-
-        <label>TEXT:</label>
-        <input type="text" id="userInputText" value="Very nice text" />
-        <label>WIDTH OF TEXT:</label>
-        <select id="widthText">
-            <option value="10px"> 10</option>
-            <option value="15px"> 20</option>
-            <option value="20px"> 30</option>
-            <option value="25px"> 40</option>
-            <option value="30px"> 50</option>
-            <option value="35px"> 60</option>
-            <option value="40px"> 70</option>
-        </select>
-        <label>FONT OF TEXT:</label>
-        <select id="fontText">
-            <option id="arial"> Arial</option>
-            <option id="Baskerville Old Face"> Baskerville Old Face</option>
-            <option id="Calibri">Calibri</option>
-            <option id="Comic Sans MS">Comic Sans MS</option>
-            <option id="SketchFlow Print">SketchFlow Print</option>
-            <option id="Vivaldi">Vivaldi</option>
-            <option id="Vladimir Script">Vladimir Script</option>
-            <option id="Broadway">Broadway</option>
-            <option id="Chiller">Chiller</option>
-            <option id="Old English Text MT">Old English Text MT</option>
-        </select>
-
-        <button id="clearAll">Erase Whiteboard</button>
+        <div>
+            WIDTH:
+            <input type="number" id="widthInput" min="1" max="100" step="1" value="2">
+        </div>
+        <h4>TEXT</h4>
+        <input type="text" id="userInputText" value="Very nice text" /> 
+        </br>
+        <div>
+            TEXTSIZE: 
+            <input type="number" id="widthText" min="1" max="100" step="5" value="10">
+        </div>
+        <div>
+            FONTS:
+            <select id="fontText">
+                <option id="arial"> Arial</option>
+                <option id="Baskerville Old Face"> Baskerville Old Face</option>
+                <option id="Calibri">Calibri</option>
+                <option id="Comic Sans MS">Comic Sans MS</option>
+                <option id="SketchFlow Print">SketchFlow Print</option>
+                <option id="Vivaldi">Vivaldi</option>
+                <option id="Vladimir Script">Vladimir Script</option>
+                <option id="Broadway">Broadway</option>
+                <option id="Chiller">Chiller</option>
+                <option id="Old English Text MT">Old English Text MT</option>
+            </select>
+        </div>
+        <div>
+            <h4>BUTTONS</h4>
+            <button type="button" id="undoButton">UNDO</button>
+            <button type="button" id="redoButton">REDO</button>
+            <button type="button" id="clearButton">CLEAR WHITEBOARD</button>
+        </div>
     </form>
-</div>
+    <div>
+        <h4>SAVED DRAWINGS</h4>
+        <select id="savedPaintings" name="prevPaint">
+        </select>
+        <button id="loadPaint">Load!</button>
 
+        <input type="text" id="paintName"/>
+        <button id="savePaint">Save!</button>
+    </div>
+</nav>
+<article>
+    <div id="paintings">
+        <canvas id="whiteboard" width="800" height="550">
+            <p>Sorry your browser doesn't handle this new heat</p>
+        </canvas>
+    </div>
+</article>
+
+
+<footer>
+    MADE BY: Axel Björnsson and Gunnlaugur Kristinn Hreiðarsson
+</footer>
+
+</div>
 
 </body>
 

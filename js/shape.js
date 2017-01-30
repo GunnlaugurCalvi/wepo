@@ -1,19 +1,15 @@
-
 class Shape {
-    constructor(x, y, color, width, uText,Wtext,fontT) {
+    constructor(p, color, width) {
         this.p1 = {
-            x: x,
-            y: y
+            x: p.x,
+            y: p.y
         };
         this.p2 = {
-            x: x,
-            y: y
+            x: p.x,
+            y: p.y
         };
         this.color = color;
         this.width = width;
-        this.text = uText;
-        this.textW = Wtext;
-        this.textFont = fontT;
     }
     setEnd(x, y) {
         this.p2.x = x;
@@ -29,7 +25,7 @@ class Shape {
     }
     drawPoint(context, p) {
         context.beginPath();
-        context.arc(p.x, p.y, this.width/2, 0, 2*Math.PI);
+        context.arc(p.x, p.y, this.width / 2, 0, 2 * Math.PI);
         context.lineWidth = 0.1;
         context.fillStyle = this.color;
         context.fill();
@@ -39,8 +35,8 @@ class Shape {
 
 
 class Pen extends Shape {
-    constructor(x, y, color) {
-        super(x, y, color);
+    constructor(p, color) {
+        super(p, color);
         this.points = [];
     }
     setEnd(x, y) {
@@ -54,7 +50,7 @@ class Pen extends Shape {
     draw(context) {
         this.updateContext(context);
         this.drawPoint(context, this.p1);
-        
+
         context.beginPath();
         this.updateContext(context);
 
@@ -63,7 +59,7 @@ class Pen extends Shape {
         });
         context.stroke();
 
-        this.drawPoint(context, this.p2);        
+        this.drawPoint(context, this.p2);
     }
 }
 
@@ -91,7 +87,7 @@ class Circle extends Shape {
     }
     draw(context) {
         this.updateContext(context);
-        
+
         // TEKIÐ AF NETINU
         var radiusX = (this.p2.x - this.p1.x) * 0.5,
             radiusY = (this.p2.y - this.p1.y) * 0.5,
@@ -120,20 +116,23 @@ class Rectangle extends Shape {
 
     draw(context) {
         this.updateContext(context);
-        
+
         context.strokeRect(this.p2.x, this.p2.y, this.p1.x - this.p2.x, this.p1.y - this.p2.y);
         context.stroke();
     }
 }
 
-class Text extends Shape{
+class Text extends Shape {
 
-    constructor(x,y,color,width,text,textW,textFont){
-        super(x,y,color,width,text,textW, textFont);
+    constructor(p, color, width, text, textW, textFont) {
+        super(p, color, width);
+        this.text = text;
+        this.textW = textW;
+        this.textFont = textFont;
     }
-    draw(context){
+    draw(context) {
         context.strokeStyle = this.color;
-        context.font = this.textW + ' ' + this.textFont;
+        context.font = this.textW + "px " + this.textFont;
         context.strokeText(this.text, this.p2.x, this.p2.y);
     };
 
